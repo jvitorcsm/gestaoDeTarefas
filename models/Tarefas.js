@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize"
-import { database } from "../database/bddApi"
-import { Usuario } from "./Usuario"
+import { database } from "../database/bddApi.js"
+import { Usuario } from "./Usuario.js"
 
 const Tarefas = database.define('Tarefas', {
         id: {
@@ -17,4 +17,6 @@ const Tarefas = database.define('Tarefas', {
             type: DataTypes.STRING,
         }
     })
+
+    export { Tarefas }
     
