@@ -1,7 +1,7 @@
 // rotas são responsaveis pelos endpoints e pelos metodos https
 
 import express from 'express'
-import { verifyToken } from '../middlewares/verifyToken'
+import { verifyToken } from '../middlewares/verifyToken.js'
 
 const router = express.Router()
 
