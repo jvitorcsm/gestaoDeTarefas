@@ -6,7 +6,7 @@ console.log('🚀 Iniciando app...')
 const app = express()
 
 // Importar a conexao criada com sequelize
-import { sequelize } from './database/bddApi.js'
+import { database } from './database/bddApi.js'
 console.log('📡 Importou sequelize') // LOG AQUI
 
 //Importa outras functions e pastas
@@ -16,7 +16,7 @@ import { router } from './routes/rotasApi.js'
 try {
     console.log('🔁 Sincronizando com banco...')
     // Método para sincronizar
-    await sequelize.sync({ alter: true }) // Força atlza a conexão sem apagar os dados
+    await database.sync({ alter: true }) // Força atlza a conexão sem apagar os dados
     console.log('✅ Sincronizado com sucesso')
 } catch(err){
     console.error('❌ Erro ao sincronizar:', err)
