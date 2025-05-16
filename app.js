@@ -1,9 +1,14 @@
 //inicio de tudo app, server, index... config inicial de tudo
 import "dotenv/config"
 import express from 'express'
+import cors from 'cors'
 console.log('🚀 Iniciando app...')
 
 const app = express()
+
+// Permitir que qualquer origem faça requisição (para dev)
+// Ou especifique seu frontend, ex: { origin: 'http://localhost:5173' }
+app.use(cors())
 
 // Importar a conexao criada com sequelize
 import { database } from './database/bddApi.js'

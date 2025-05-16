@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import jwtDecode from 'jwt-decode'  // Importação correta do jwt-decode
 import { loginUser } from '../api.js'
 
 export function Login({ onLogin }) {
@@ -8,13 +9,26 @@ export function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError(null)
+  
     try {
       const data = await loginUser(email, senha)
-      onLogin(data.token)
-    } catch {
+      console.log('Login data:', data)
+  
+      const decodeFn = typeof jwtDecode === 'function' ? jwtDecode : jwtDecode.default
+      const decoded = decodeFn(data.token)
+  
+      const idUsuario = decoded.idUsuario || decoded.id || decoded.sub
+      if (!idUsuario) {
+        throw new Error('ID do usuário não encontrado no token')
+      }
+  
+      onLogin(data.token, idUsuario)
+    } catch (err) {
+      console.error(err)
       setError('Email ou senha inválidos')
     }
-  }
+  }  
 
   return (
     <div>

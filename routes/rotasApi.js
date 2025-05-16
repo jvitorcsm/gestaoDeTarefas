@@ -8,9 +8,9 @@ import { makeTask, task, deleteTask } from '../controllers/tarefas.js'
 const router = express.Router()
 
 router.post('/usuario', makeUser)
-router.get('/login', sighIn)
+router.post('/login', sighIn)
 router.post('/tarefas', verifyToken, makeTask)
-router.delete('/tarefas', verifyToken, deleteTask)
+router.delete('/tarefas/:id', verifyToken, deleteTask)
 router.get('/tarefas', verifyToken, task)
 
 export { router }

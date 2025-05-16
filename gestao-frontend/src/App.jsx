@@ -1,19 +1,22 @@
 import { useState } from 'react'
 import { Login } from './pages/Login'
 import { Tarefas } from './pages/Tarefas'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [token, setToken] = useState(null)
-  const [count, setCount] = useState(0)
+  const [idUsuario, setIdUsuario] = useState(null)
 
-  if (!token) {
-    return <Login onLogin={setToken} />
+  function handleLogin(tokenRecebido, idUsuarioRecebido) {
+    setToken(tokenRecebido)
+    setIdUsuario(idUsuarioRecebido)
   }
 
-  return <Tarefas token={token} />
+  if (!token) {
+    return <Login onLogin={handleLogin} />
+  }
+
+  return <Tarefas token={token} idUsuario={idUsuario} />
 }
 
 export default App
