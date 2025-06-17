@@ -39,11 +39,23 @@ export async function excluirTarefa(token, id) {
 }
 
 export async function loginUser(email, senha) {
-  const res = await fetch(`${API_URL}/login`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, senha }),
-  });
-  if (!res.ok) throw new Error('Erro no login');
-  return res.json();
+  try {
+    const res = await fetch(`${API_URL}/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, senha }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.mensagem || 'Erro no login');
+    }
+
+    return data;
+  } catch (err) {
+    console.error('Erro no login:', err.message);
+    throw err;
+  }
 }
+

@@ -1,0 +1,86 @@
+.container-tarefas {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem;
+  color: white;
+}
+
+.formulario {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formulario input,
+.formulario select,
+.formulario button {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+}
+
+.kanban {
+  flex: 3;
+  display: flex;
+  gap: 1rem;
+}
+
+.coluna {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 200px;
+  height: fit-content;
+}
+
+.coluna h4 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Cores específicas por coluna */
+.coluna:nth-child(1) {
+  background-color: #3a3f4b;
+}
+
+.coluna:nth-child(2) {
+  background-color: #5c4f1d;
+}
+
+.coluna:nth-child(3) {
+  background-color: #2e4a32;
+}
+
+.card-tarefa {
+  background-color: #444;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.card-tarefa:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.badge {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  background-color: #222;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  color: white;
+  opacity: 0.8;
+  text-transform: uppercase;
+}

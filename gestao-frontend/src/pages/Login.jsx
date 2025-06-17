@@ -33,7 +33,7 @@ export function Login({ onLogin }) {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '200px', gap: '10px' }}>
         <input 
           type="email" 
           placeholder="Email"
