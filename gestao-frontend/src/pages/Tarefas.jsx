@@ -92,12 +92,10 @@ export function Tarefas({ token, idUsuario, nomeUsuario }) {
       <div className="kanban">
         <DragDropContext onDragEnd={async (result) => {
           const { destination, draggableId } = result;
-
           if (!destination) return;
 
-          const novoStatus = destination.droppableId;
+          const novoStatus = destination.droppableId
 
-          // Atualiza o estado local primeiro para evitar erro visual
           setTarefas((prevTarefas) =>
             prevTarefas.map((tarefa) =>
               String(tarefa.id) === draggableId
@@ -106,7 +104,6 @@ export function Tarefas({ token, idUsuario, nomeUsuario }) {
             )
           );
 
-          // Depois atualiza no banco
           try {
             const response = await fetch(`http://localhost:3000/tarefas/${draggableId}`, {
               method: 'PUT',
@@ -120,49 +117,42 @@ export function Tarefas({ token, idUsuario, nomeUsuario }) {
             if (!response.ok) {
               throw new Error('Erro ao atualizar no servidor');
             }
-
-            // Se quiser garantir consistência total, pode recarregar depois:
-            // await carregarTarefas();
-
           } catch (err) {
             console.error('Erro ao mover tarefa:', err);
             setError('Erro ao atualizar tarefa no servidor');
           }
         }}>
           {Object.entries(colunas).map(([colId, col]) => (
-            <Droppable droppableId={colId} isDropDisabled={false}>
+            <Droppable droppableId={colId} key={colId}>
               {(provided) => (
-                <div className="coluna">
+                <div
+                  className="coluna"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  style={{ minHeight: '120px', padding: '10px' }}
+                >
                   <h4>{col.nome}</h4>
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    style={{ minHeight: '100px' }}
-                  >
-                    {col.tarefas.map((tarefa, index) => (
-                      <Draggable draggableId={String(tarefa.id)} index={index} key={tarefa.id}>
-                        {(provided) => (
-                          <div
-                            className="card-tarefa"
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <span className="badge">
-                              {tarefa.status === 'a-fazer' ? 'A Fazer' :
-                                tarefa.status === 'fazendo' ? 'Fazendo' : 'Pronto'}
-                            </span>
-
-                            <p><strong>{tarefa.titulo}</strong></p>
-                            <p>{tarefa.descricao}</p>
-
-                            <button onClick={() => handleDelete(tarefa.id)}>Excluir</button>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </div>
+                  {col.tarefas.map((tarefa, index) => (
+                    <Draggable draggableId={String(tarefa.id)} index={index} key={tarefa.id}>
+                      {(provided) => (
+                        <div
+                          className="card-tarefa"
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <span className="badge">
+                            {tarefa.status === 'a-fazer' ? 'A Fazer' :
+                              tarefa.status === 'fazendo' ? 'Fazendo' : 'Pronto'}
+                          </span>
+                          <p><strong>{tarefa.titulo}</strong></p>
+                          <p>{tarefa.descricao}</p>
+                          <button onClick={() => handleDelete(tarefa.id)}>Excluir</button>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
                 </div>
               )}
             </Droppable>
